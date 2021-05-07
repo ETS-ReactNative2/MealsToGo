@@ -11,3 +11,9 @@ web-build/
 
 # macOS
 .DS_Store
+.eslintrc
+.prettierrc
+src/mock/chicago.json
+.gitignore
+src/mock/
+notes
