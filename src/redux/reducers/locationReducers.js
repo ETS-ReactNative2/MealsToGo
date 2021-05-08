@@ -8,7 +8,7 @@ export const locationReducer = (
     case locationConst.LOCATION_REQUEST:
       return { loading: true, keyword: action.payload };
     case locationConst.LOCATION_SUCCESS:
-      return { loading: false, restaurants: action.payload, ...state };
+      return { loading: false, location: action.payload, ...state };
     case locationConst.LOCATION_FAIL:
       return { loading: false, error: action.payload };
     default:

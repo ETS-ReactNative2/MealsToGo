@@ -2,12 +2,11 @@ import * as restaurantConst from '../constants/restaurantConstants';
 import { mocks, mockImages } from '../../mock/restaurants';
 import camelize from 'camelize';
 
-export const getRestaurantsList = (
-  location = '37.7749295,-122.4194155'
-) => async (dispatch) => {
+export const getRestaurantsList = (location) => async (dispatch) => {
   try {
     dispatch({ type: restaurantConst.RESTAURANTS_LIST_REQUEST });
-    const mock = mocks[location];
+    const locationString = `${location.lat},${location.lng}`;
+    const mock = mocks[locationString];
     if (!mock) {
       throw new Error('not found');
     }
@@ -40,6 +39,7 @@ const restaurantsTransform = ({ results = [] }) => {
     });
     return {
       ...restaurant,
+      address: restaurant.vicinity,
       isOpenNow: restaurant.opening_hours && restaurant.opening_hours.open_now,
       isClosedTemporarily: restaurant.business_status === 'CLOSED_TEMPORARILY',
     };
