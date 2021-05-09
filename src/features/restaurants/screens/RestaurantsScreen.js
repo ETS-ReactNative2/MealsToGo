@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRestaurantsList } from '../../../redux/actions/restaurantActions';
 import { ActivityIndicator, Colors } from 'react-native-paper';
@@ -9,6 +9,7 @@ import SafeArea from '../../../components/utils/SafeArea';
 import Search from '../components/Search';
 import RestaurantInfoCard from '../components/RestaurantInfoCard';
 import Spacer from '../../../components/Spacer';
+import FavoritesBar from '../../../components/FavoritesBar';
 
 const RestaurantList = styled(FlatList).attrs((props) => ({
   contentContainerStyle: getStylesForProperty('padding', props.theme.space[3]),
@@ -25,6 +26,7 @@ const LoadingContainer = styled.View`
 
 export default function RestaurantsScreen({ navigation }) {
   const dispatch = useDispatch();
+  const [isToggled, setIsToggled] = useState(false);
   const { restaurants, loading, error } = useSelector(
     (state) => state.restaurantsList
   );
@@ -42,7 +44,11 @@ export default function RestaurantsScreen({ navigation }) {
           <Loading size={50} animating={true} color={Colors.blue300} />
         </LoadingContainer>
       )}
-      <Search />
+      <Search
+        isFavouritesToggled={isToggled}
+        onFavouritesToggle={() => setIsToggled(!isToggled)}
+      />
+      {isToggled && <FavoritesBar onNavigate={navigation.navigate} />}
       <RestaurantList
         data={restaurants}
         renderItem={({ item }) => (
