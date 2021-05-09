@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { mocks, mockImages } from '../../../mock/restaurants';
+import { mocks, mockImages } from './mock';
 import camelize from 'camelize';
 
 const initialState = { restaurants: [] };

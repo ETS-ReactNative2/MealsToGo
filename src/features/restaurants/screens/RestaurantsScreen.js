@@ -8,7 +8,7 @@ import { getStylesForProperty } from 'css-to-react-native';
 import SafeArea from '../../../components/utils/SafeArea';
 import Search from '../components/Search';
 import RestaurantInfoCard from '../components/RestaurantInfoCard';
-import Spacer from '../../../components/Spacer';
+import Spacer from '../../../components/utils/Spacer';
 import FavoritesBar from '../../../components/Favorites/FavoritesBar';
 
 const RestaurantList = styled(FlatList).attrs((props) => ({

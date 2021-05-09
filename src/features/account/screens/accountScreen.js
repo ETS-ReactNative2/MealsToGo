@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Spacer from '../../../components/Spacer';
+import Spacer from '../../../components/utils/Spacer';
 import {
   AccountBackground,
   AccountContainer,

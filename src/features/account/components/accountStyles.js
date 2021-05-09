@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { Button, TextInput } from 'react-native-paper';
-import Text from '../../../components/Text';
+import Text from '../../../components/utils/Text';
 import { colors } from '../../../infrastructure/theme/colors';
 
 export const AccountBackground = styled.ImageBackground.attrs({

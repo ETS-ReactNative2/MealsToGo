@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { locations } from '../../mock/location';
+import { locations } from './mock';
 import camelize from 'camelize';
 
 const initialState = { keyword: 'San Francisco' };

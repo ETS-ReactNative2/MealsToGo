@@ -2,9 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-import Spacer from '../Spacer';
-import CompactRestaurantInfo from '../CompactRestaurantInfo';
-import Text from '../Text';
+import Spacer from '../utils/Spacer';
+import CompactRestaurantInfo from '../CompactRestaurantInfo/CompactRestaurantInfo';
+import Text from '../utils/Text';
 
 const FavoritesWrapper = styled.View`
   padding: 10px;

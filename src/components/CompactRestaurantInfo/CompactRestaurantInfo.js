@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import WebView from 'react-native-webview';
 import { Platform } from 'react-native';
 
-import Text from './Text';
+import Text from '../utils/Text';
 
 const CompactImage = styled.Image`
   border-radius: 10px;

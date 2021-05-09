@@ -3,8 +3,8 @@ import { View } from 'react-native';
 
 import Favorite from '../../../components/Favorites/Favorite';
 import { SvgXml } from 'react-native-svg';
-import Spacer from '../../../components/Spacer';
-import Text from '../../../components/Text';
+import Spacer from '../../../components/utils/Spacer';
+import Text from '../../../components/utils/Text';
 import star from '../../../../assets/star';
 import open from '../../../../assets/open';
 import {

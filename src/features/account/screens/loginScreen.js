@@ -10,8 +10,8 @@ import {
   ErrorContainer,
   Title,
 } from '../components/accountStyles';
-import Text from '../../../components/Text';
-import Spacer from '../../../components/Spacer';
+import Text from '../../../components/utils/Text';
+import Spacer from '../../../components/utils/Spacer';
 
 export default function LoginScreen({ navigation }) {
   const dispatch = useDispatch();
