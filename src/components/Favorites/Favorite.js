@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components/native';
 import { AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
-import {
-  addFavoriteRestaurant,
-  removeFavoriteRestaurant,
-} from '../redux/actions/favoriteActions';
+import { addFavorite, removeFavorite } from './favoritesSlice';
 
 const FavouriteButton = styled(TouchableOpacity)`
   position: absolute;
@@ -15,8 +12,8 @@ const FavouriteButton = styled(TouchableOpacity)`
   z-index: 9;
 `;
 
-export default function Favourite({ restaurant }) {
-  const { favorites } = useSelector((state) => state.favorite);
+export default function Favorite({ restaurant }) {
+  const { favorites } = useSelector((state) => state.favorites);
   const dispatch = useDispatch();
 
   const isFavourite = favorites.find((r) => r.placeId === restaurant.placeId);
@@ -25,8 +22,8 @@ export default function Favourite({ restaurant }) {
     <FavouriteButton
       onPress={() =>
         !isFavourite
-          ? dispatch(addFavoriteRestaurant(restaurant))
-          : dispatch(removeFavoriteRestaurant(restaurant))
+          ? dispatch(addFavorite(restaurant))
+          : dispatch(removeFavorite(restaurant))
       }
     >
       <AntDesign

@@ -9,7 +9,7 @@ import {
 import { useFonts as useLato, Lato_400Regular } from '@expo-google-fonts/lato';
 import { Provider } from 'react-redux';
 import Navigation from './src/infrastructure/navigation/Navigation';
-import store from './src/redux/store';
+import store from './src/infrastructure/store';
 import firebase from 'firebase/app';
 
 const firebaseConfig = {

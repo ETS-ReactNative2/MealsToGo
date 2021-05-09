@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getLocation } from '../../../redux/actions/locationActions';
+import { fetchLocation } from '../../../slices/location/locationSlice';
 import styled from 'styled-components/native';
 import { Searchbar } from 'react-native-paper';
 
@@ -14,7 +14,7 @@ export default function Search({ isFavouritesToggled, onFavouritesToggle }) {
   const [searchKeyword, setSearchKeyword] = useState(keyword);
 
   useEffect(() => {
-    dispatch(getLocation('San Francisco'));
+    dispatch(fetchLocation('San Francisco'));
   }, [dispatch]);
 
   return (
@@ -24,7 +24,7 @@ export default function Search({ isFavouritesToggled, onFavouritesToggle }) {
         icon={isFavouritesToggled ? 'heart' : 'heart-outline'}
         onIconPress={onFavouritesToggle}
         value={searchKeyword}
-        onSubmitEditing={() => dispatch(getLocation(searchKeyword))}
+        onSubmitEditing={() => dispatch(fetchLocation(searchKeyword))}
         onChangeText={(text) => setSearchKeyword(text)}
       />
     </SearchContainer>

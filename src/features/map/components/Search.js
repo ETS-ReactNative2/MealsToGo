@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getLocation } from '../../../redux/actions/locationActions';
+import { fetchLocation } from '../../../slices/location/locationSlice';
 
 import styled from 'styled-components/native';
 import { Searchbar } from 'react-native-paper';
@@ -28,7 +28,7 @@ export default function Search() {
         placeholder='Search for a location'
         icon='map'
         value={searchKeyword}
-        onSubmitEditing={() => dispatch(getLocation(searchKeyword))}
+        onSubmitEditing={() => dispatch(fetchLocation(searchKeyword))}
         onChangeText={(text) => setSearchKeyword(text)}
       />
     </SearchContainer>

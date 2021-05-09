@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRestaurantsList } from '../../../redux/actions/restaurantActions';
+import { fetchRestaurants } from '../slices/restaurantsSlice';
 import { ActivityIndicator, Colors } from 'react-native-paper';
 import { FlatList, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
@@ -9,7 +9,7 @@ import SafeArea from '../../../components/utils/SafeArea';
 import Search from '../components/Search';
 import RestaurantInfoCard from '../components/RestaurantInfoCard';
 import Spacer from '../../../components/Spacer';
-import FavoritesBar from '../../../components/FavoritesBar';
+import FavoritesBar from '../../../components/Favorites/FavoritesBar';
 
 const RestaurantList = styled(FlatList).attrs((props) => ({
   contentContainerStyle: getStylesForProperty('padding', props.theme.space[3]),
@@ -28,12 +28,12 @@ export default function RestaurantsScreen({ navigation }) {
   const dispatch = useDispatch();
   const [isToggled, setIsToggled] = useState(false);
   const { restaurants, loading, error } = useSelector(
-    (state) => state.restaurantsList
+    (state) => state.restaurants
   );
   const { location } = useSelector((state) => state.location);
   useEffect(() => {
     if (location) {
-      dispatch(getRestaurantsList(location));
+      dispatch(fetchRestaurants(location));
     }
   }, [dispatch, location]);
 

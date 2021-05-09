@@ -2,15 +2,15 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-import Spacer from './Spacer';
-import CompactRestaurantInfo from './CompactRestaurantInfo';
-import Text from './Text';
+import Spacer from '../Spacer';
+import CompactRestaurantInfo from '../CompactRestaurantInfo';
+import Text from '../Text';
 
 const FavoritesWrapper = styled.View`
   padding: 10px;
 `;
 export default function FavoritesBar({ onNavigate }) {
-  const { favorites } = useSelector((state) => state.favorite);
+  const { favorites } = useSelector((state) => state.favorites);
 
   if (!favorites.length) {
     return null;

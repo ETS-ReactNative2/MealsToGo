@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import Favorite from '../../../components/Favorite';
+import Favorite from '../../../components/Favorites/Favorite';
 import { SvgXml } from 'react-native-svg';
 import Spacer from '../../../components/Spacer';
 import Text from '../../../components/Text';

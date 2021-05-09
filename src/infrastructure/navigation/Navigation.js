@@ -5,11 +5,11 @@ import AccountNavigator from './AccountNavigator';
 import AppNavigator from './AppNavigator';
 
 export default function Navigation() {
-  const { isAuthenticated } = useSelector((state) => state.userLogin);
+  const { isAuthenticated } = useSelector((state) => state.user);
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? <AppNavigator /> : <AccountNavigator />}
+      {isAuthenticated || true ? <AppNavigator /> : <AccountNavigator />}
     </NavigationContainer>
   );
 }

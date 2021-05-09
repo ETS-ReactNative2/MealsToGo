@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../../redux/actions/userActions';
+import { login } from '../slices/userSlice';
 import {
   AccountBackground,
   AccountCover,
@@ -15,7 +15,7 @@ import Spacer from '../../../components/Spacer';
 
 export default function LoginScreen({ navigation }) {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.userLogin);
+  const { error } = useSelector((state) => state.user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -52,7 +52,7 @@ export default function LoginScreen({ navigation }) {
           <AuthButton
             icon='lock-open-outline'
             mode='contained'
-            onPress={() => dispatch(login(email, password))}
+            onPress={() => dispatch(login({ email, password }))}
           >
             Login
           </AuthButton>

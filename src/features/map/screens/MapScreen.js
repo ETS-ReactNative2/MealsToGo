@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import MapView from 'react-native-maps';
 import MapCallout from '../components/MapCallout';
 
@@ -12,7 +12,7 @@ const Map = styled(MapView)`
 `;
 export default function MapScreen({ navigation }) {
   const { location } = useSelector((state) => state.location);
-  const { restaurants } = useSelector((state) => state.restaurantsList);
+  const { restaurants } = useSelector((state) => state.restaurants);
   const [latDelta, setLatDelta] = useState(0);
   const { lat, lng, viewport } = location;
 
