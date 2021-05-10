@@ -41,7 +41,7 @@ export const savePhoto = createAsyncThunk(
 );
 
 export const loadPhoto = createAsyncThunk(
-  'user/savePhoto',
+  'user/loadPhoto',
   async (_, { getState }) => {
     const { user } = getState();
     const photoUri = await AsyncStorage.getItem(`${user.info.uid}-photo`);

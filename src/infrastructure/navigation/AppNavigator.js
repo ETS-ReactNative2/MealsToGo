@@ -6,6 +6,7 @@ import MapScreen from '../../features/map/screens/MapScreen';
 import RestaurantsNavigator from './RestaurantsNavigator';
 import SettingsNavigator from './SettingsNavigator';
 import { loadFavorites } from '../../components/Favorites/favoritesSlice';
+import { loadPhoto } from '../../features/account/slices/userSlice';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,6 +30,7 @@ export default function AppNavigator() {
 
   useEffect(() => {
     dispatch(loadFavorites());
+    dispatch(loadPhoto());
   }, [dispatch]);
 
   return (

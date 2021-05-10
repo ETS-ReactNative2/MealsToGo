@@ -13,9 +13,7 @@ export default function Navigation() {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((usr) => {
       if (usr) {
-        return dispatch(isLoggedIn(usr));
-      } else {
-        return;
+        dispatch(isLoggedIn(usr));
       }
     });
   }, [dispatch]);
