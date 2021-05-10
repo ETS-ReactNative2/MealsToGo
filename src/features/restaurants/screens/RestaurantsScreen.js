@@ -2,18 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRestaurants } from '../slices/restaurantsSlice';
 import { ActivityIndicator, Colors } from 'react-native-paper';
-import { FlatList, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-import { getStylesForProperty } from 'css-to-react-native';
 import SafeArea from '../../../components/utils/SafeArea';
 import Search from '../components/Search';
 import RestaurantInfoCard from '../components/RestaurantInfoCard';
 import Spacer from '../../../components/utils/Spacer';
 import FavoritesBar from '../../../components/Favorites/FavoritesBar';
-
-const RestaurantList = styled(FlatList).attrs((props) => ({
-  contentContainerStyle: getStylesForProperty('padding', props.theme.space[3]),
-}))``;
+import { RestaurantList } from '../components/RestaurantListStyles';
 
 const Loading = styled(ActivityIndicator)`
   margin-left: -25px;

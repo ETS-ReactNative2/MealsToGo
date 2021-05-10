@@ -2,15 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { Button, Text } from 'react-native';
 import MapScreen from '../../features/map/screens/MapScreen';
 import RestaurantsNavigator from './RestaurantsNavigator';
-import SafeArea from '../../components/utils/SafeArea';
-import { logout } from '../../features/account/slices/userSlice';
-import {
-  loadFavorites,
-  saveFavorites,
-} from '../../components/Favorites/favoritesSlice';
+import SettingsNavigator from './SettingsNavigator';
+import { loadFavorites } from '../../components/Favorites/favoritesSlice';
 
 const Tab = createBottomTabNavigator();
 
@@ -32,19 +27,6 @@ const createScreenOptions = ({ route }) => {
 export default function AppNavigator() {
   const dispatch = useDispatch();
 
-  const Settings = () => (
-    <SafeArea>
-      <Button
-        title='logout'
-        onPress={() => {
-          dispatch(saveFavorites());
-          dispatch(logout());
-        }}
-      />
-      <Text>Settings</Text>
-    </SafeArea>
-  );
-
   useEffect(() => {
     dispatch(loadFavorites());
   }, [dispatch]);
@@ -59,7 +41,7 @@ export default function AppNavigator() {
     >
       <Tab.Screen name='Restaurants' component={RestaurantsNavigator} />
       <Tab.Screen name='Map' component={MapScreen} />
-      <Tab.Screen name='Settings' component={Settings} />
+      <Tab.Screen name='Settings' component={SettingsNavigator} />
     </Tab.Navigator>
   );
 }
