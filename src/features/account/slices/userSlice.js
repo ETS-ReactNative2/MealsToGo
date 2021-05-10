@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as firebase from 'firebase';
 
 const initialState = { info: {}, isAuthenticated: false };
@@ -26,24 +27,37 @@ export const register = createAsyncThunk(
   }
 );
 
-export const isLoggedIn = createAsyncThunk('user/isLoggedIn', async () => {
-  firebase.auth().onAuthStateChanged((usr) => {
-    if (usr) {
-      return usr.user;
-    } else {
-      return;
-    }
-  });
-});
-
 export const logout = createAsyncThunk('user/logout', async () => {
   return firebase.auth().signOut();
 });
 
+export const savePhoto = createAsyncThunk(
+  'user/savePhoto',
+  async (photo, { getState }) => {
+    const { user } = getState();
+    await AsyncStorage.setItem(`${user.info.uid}-photo`, photo.uri);
+    return photo.uri;
+  }
+);
+
+export const loadPhoto = createAsyncThunk(
+  'user/savePhoto',
+  async (_, { getState }) => {
+    const { user } = getState();
+    const photoUri = await AsyncStorage.getItem(`${user.info.uid}-photo`);
+    return photoUri;
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    isLoggedIn(state, action) {
+      state.info = action.payload;
+      state.isAuthenticated = true;
+    },
+  },
   extraReducers: {
     [login.pending]: (state, action) => {
       state.loading = true;
@@ -73,15 +87,20 @@ const userSlice = createSlice({
       state.error = action.error.message;
       state.isAuthenticated = false;
     },
-    [isLoggedIn.fulfilled]: (state, action) => {
-      state.info = action.payload;
-      state.isAuthenticated = true;
-    },
     [logout.fulfilled]: (state, action) => {
       state.info = null;
+      state.photo = null;
       state.isAuthenticated = false;
+    },
+    [savePhoto.fulfilled]: (state, action) => {
+      state.photo = action.payload;
+    },
+    [loadPhoto.fulfilled]: (state, action) => {
+      state.photo = action.payload;
     },
   },
 });
+
+export const { isLoggedIn } = userSlice.actions;
 
 export default userSlice.reducer;

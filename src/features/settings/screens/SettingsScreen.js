@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../account/slices/userSlice';
+import { TouchableOpacity } from 'react-native';
+import { loadPhoto, logout } from '../../account/slices/userSlice';
 import { saveFavorites } from '../../../components/Favorites/favoritesSlice';
 import { List, Avatar } from 'react-native-paper';
-
+import { useFocusEffect } from '@react-navigation/native';
 import Text from '../../../components/utils/Text';
 import Spacer from '../../../components/utils/Spacer';
 import SafeArea from '../../../components/utils/SafeArea';
@@ -18,14 +19,24 @@ const AvatarContainer = styled.View`
 
 export default function SettingsScreen({ navigation }) {
   const dispatch = useDispatch();
-  const { info } = useSelector((state) => state.user);
+  const { info, photo } = useSelector((state) => state.user);
 
   return (
     <SafeArea>
       <AvatarContainer>
-        <Avatar.Icon size={180} icon='human' backgroundColor='#2182BD' />
+        <TouchableOpacity onPress={() => navigation.navigate('Camera')}>
+          {photo ? (
+            <Avatar.Image
+              size={180}
+              source={{ uri: photo }}
+              backgroundColor='#2182BD'
+            />
+          ) : (
+            <Avatar.Icon size={180} icon='human' backgroundColor='#2182BD' />
+          )}
+        </TouchableOpacity>
         <Spacer position='top' size='large'>
-          <Text variant='label'>{info}</Text>
+          <Text variant='label'>{info ? info.email : ''}</Text>
         </Spacer>
       </AvatarContainer>
 
