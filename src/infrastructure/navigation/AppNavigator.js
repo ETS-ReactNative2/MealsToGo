@@ -27,7 +27,6 @@ const createScreenOptions = ({ route }) => {
 
 export default function AppNavigator() {
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(loadFavorites());
     dispatch(loadPhoto());

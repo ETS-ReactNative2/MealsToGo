@@ -10,20 +10,16 @@ import { useFonts as useLato, Lato_400Regular } from '@expo-google-fonts/lato';
 import { Provider } from 'react-redux';
 import Navigation from './src/infrastructure/navigation/Navigation';
 import store from './src/infrastructure/store';
-import firebase from 'firebase/app';
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyDCTxnrBtX_LQ_BUq9zADPJuhjSUpjPyU4',
-  authDomain: 'mealstogo-2244b.firebaseapp.com',
-  projectId: 'mealstogo-2244b',
-  storageBucket: 'mealstogo-2244b.appspot.com',
-  messagingSenderId: '880371162913',
-  appId: '1:880371162913:web:937e7d4951173a44bc6860',
-};
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Parse from 'parse/react-native';
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+Parse.setAsyncStorage(AsyncStorage);
+Parse.initialize(
+  'QKfadz940jcOwmeBAa35HqFZcaRM02HG4BkTnv7L',
+  'ioNNVmyFqnCeptnGh1PxhGUvvi99A0mx3YcO0F25'
+);
+Parse.serverURL = 'https://parseapi.back4app.com/';
 
 export default function App() {
   const [oswaldLoaded] = useOswald({

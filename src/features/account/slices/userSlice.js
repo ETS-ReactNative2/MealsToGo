@@ -1,16 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as firebase from 'firebase';
+import Parse from 'parse/react-native';
 
 const initialState = { info: {}, isAuthenticated: false };
+
+export const isLoggedIn = createAsyncThunk('user/isLoggedIn', async () => {
+  const user = await Parse.User.currentAsync();
+  return { username: user.get('username'), email: user.get('email') };
+});
 
 export const login = createAsyncThunk(
   'user/login',
   async ({ email, password }) => {
-    const { user } = await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password);
-    return user;
+    const user = await Parse.User.logIn(email, password);
+    return { username: user.get('username'), email: user.get('email') };
   }
 );
 
@@ -20,22 +23,20 @@ export const register = createAsyncThunk(
     if (password !== repeatedPassword) {
       throw Error('Error: Passwords do not match');
     }
-    const { user } = await firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password);
-    return user;
+    const user = await Parse.User.signUp(email, password, { email: email });
+    return { username: user.get('username'), email: user.get('email') };
   }
 );
 
 export const logout = createAsyncThunk('user/logout', async () => {
-  return firebase.auth().signOut();
+  return await Parse.User.logOut();
 });
 
 export const savePhoto = createAsyncThunk(
   'user/savePhoto',
   async (photo, { getState }) => {
     const { user } = getState();
-    await AsyncStorage.setItem(`${user.info.uid}-photo`, photo.uri);
+    await AsyncStorage.setItem(`${user.info.username}-photo`, photo.uri);
     return photo.uri;
   }
 );
@@ -44,7 +45,7 @@ export const loadPhoto = createAsyncThunk(
   'user/loadPhoto',
   async (_, { getState }) => {
     const { user } = getState();
-    const photoUri = await AsyncStorage.getItem(`${user.info.uid}-photo`);
+    const photoUri = await AsyncStorage.getItem(`${user.info.objectId}-photo`);
     return photoUri;
   }
 );
@@ -52,13 +53,16 @@ export const loadPhoto = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    isLoggedIn(state, action) {
-      state.info = action.payload;
-      state.isAuthenticated = true;
-    },
-  },
+  reducers: {},
   extraReducers: {
+    [isLoggedIn.fulfilled]: (state, action) => {
+      if (action.payload) {
+        state.info = action.payload;
+        state.isAuthenticated = true;
+      } else {
+        state.isAuthenticated = false;
+      }
+    },
     [login.pending]: (state, action) => {
       state.loading = true;
       state.isAuthenticated = state.isAuthenticated;
@@ -100,7 +104,5 @@ const userSlice = createSlice({
     },
   },
 });
-
-export const { isLoggedIn } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -8,7 +8,7 @@ export const loadFavorites = createAsyncThunk(
   async (_, { getState }) => {
     const { user } = getState();
     const storageFavorites = await AsyncStorage.getItem(
-      `@favorites-${user.info.uid}`
+      `@favorites-${user.info.username}`
     );
     return storageFavorites ? JSON.parse(storageFavorites) : [];
   }
@@ -19,7 +19,7 @@ export const saveFavorites = createAsyncThunk(
   async (_, { getState }) => {
     const { favorites, user } = getState();
     const jsonValue = JSON.stringify(favorites.favorites);
-    await AsyncStorage.setItem(`@favorites-${user.info.uid}`, jsonValue);
+    await AsyncStorage.setItem(`@favorites-${user.info.username}`, jsonValue);
     return;
   }
 );

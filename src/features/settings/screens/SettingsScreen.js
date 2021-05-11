@@ -19,7 +19,6 @@ const AvatarContainer = styled.View`
 export default function SettingsScreen({ navigation }) {
   const dispatch = useDispatch();
   const { info, photo } = useSelector((state) => state.user);
-
   return (
     <SafeArea>
       <AvatarContainer>
