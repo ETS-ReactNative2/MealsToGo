@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { locations } from './mock';
-import camelize from 'camelize';
+import Parse from 'parse/react-native';
 
 const initialState = { keyword: 'San Francisco' };
 
@@ -8,22 +7,16 @@ export const fetchLocation = createAsyncThunk(
   'location/fetchLocation',
   async (keyword) => {
     if (keyword) {
-      const locationMock = locations[keyword.toLowerCase()];
-      if (!locationMock) {
+      const location = await Parse.Cloud.run('getLocation', {
+        location: keyword,
+      });
+      if (!location) {
         throw new Error('not found');
       }
-      return locationTransform(locationMock);
+      return location;
     }
   }
 );
-
-export const locationTransform = (result) => {
-  const formattedResponse = camelize(result);
-  const { geometry = {} } = formattedResponse.results[0];
-  const { lat, lng } = geometry.location;
-
-  return { lat, lng, viewport: geometry.viewport };
-};
 
 const locationSlice = createSlice({
   name: 'location',
@@ -36,7 +29,7 @@ const locationSlice = createSlice({
     },
     [fetchLocation.fulfilled]: (state, action) => {
       state.loading = false;
-      state.location = action.payload;
+      state.geometry = action.payload;
       state.keyword = state.keyword;
     },
     [fetchLocation.rejected]: (state, action) => {

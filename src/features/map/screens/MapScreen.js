@@ -11,17 +11,18 @@ const Map = styled(MapView)`
   width: 100%;
 `;
 export default function MapScreen({ navigation }) {
-  const { location } = useSelector((state) => state.location);
+  const { lat, lng, viewport } = useSelector(
+    (state) => state.location.geometry
+  );
   const { restaurants } = useSelector((state) => state.restaurants);
   const [latDelta, setLatDelta] = useState(0);
-  const { lat, lng, viewport } = location;
 
   useEffect(() => {
     const northeastLat = viewport.northeast.lat;
     const southwestLat = viewport.southwest.lat;
 
     setLatDelta(northeastLat - southwestLat);
-  }, [location, viewport]);
+  }, [viewport]);
 
   return (
     <>
@@ -37,11 +38,11 @@ export default function MapScreen({ navigation }) {
         {restaurants.map((restaurant) => {
           return (
             <MapView.Marker
-              key={restaurant.name}
+              key={restaurant.placeId}
               title={restaurant.name}
               coordinate={{
-                latitude: restaurant.geometry.location.lat,
-                longitude: restaurant.geometry.location.lng,
+                latitude: restaurant.geometry.lat,
+                longitude: restaurant.geometry.lng,
               }}
             >
               <MapView.Callout

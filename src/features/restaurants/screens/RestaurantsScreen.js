@@ -27,12 +27,12 @@ export default function RestaurantsScreen({ navigation }) {
   const { restaurants, loading, error } = useSelector(
     (state) => state.restaurants
   );
-  const { location } = useSelector((state) => state.location);
+  const { geometry } = useSelector((state) => state.location);
   useEffect(() => {
-    if (location) {
-      dispatch(fetchRestaurants(location));
+    if (geometry) {
+      dispatch(fetchRestaurants(geometry));
     }
-  }, [dispatch, location]);
+  }, [dispatch, geometry]);
 
   return (
     <SafeArea>
@@ -63,7 +63,7 @@ export default function RestaurantsScreen({ navigation }) {
             </Spacer>
           </TouchableOpacity>
         )}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.placeId}
       />
     </SafeArea>
   );

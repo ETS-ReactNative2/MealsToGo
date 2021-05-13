@@ -1,36 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { mocks, mockImages } from './mock';
-import camelize from 'camelize';
+import Parse from 'parse/react-native';
 
 const initialState = { restaurants: [] };
 
 export const fetchRestaurants = createAsyncThunk(
   'restaurants/fetchRestaurants',
   async (location) => {
-    const locationString = `${location.lat},${location.lng}`;
-    const mock = mocks[locationString];
-    if (!mock) {
+    const restaurants = await Parse.Cloud.run('getNearbyRestaurants', {
+      location,
+    });
+    if (!restaurants) {
       throw new Error('not found');
     }
-    return restaurantsTransform(mock);
+    return restaurants;
   }
 );
-
-const restaurantsTransform = ({ results = [] }) => {
-  const mappedResults = results.map((restaurant) => {
-    restaurant.photos = restaurant.photos.map((p) => {
-      return mockImages[Math.ceil(Math.random() * (mockImages.length - 1))];
-    });
-    return {
-      ...restaurant,
-      address: restaurant.vicinity,
-      isOpenNow: restaurant.opening_hours && restaurant.opening_hours.open_now,
-      isClosedTemporarily: restaurant.business_status === 'CLOSED_TEMPORARILY',
-    };
-  });
-
-  return camelize(mappedResults);
-};
 
 const restaurantsSlice = createSlice({
   name: 'restaurants',

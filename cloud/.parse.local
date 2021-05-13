@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "MealsToGo": {
+      "applicationId": "QKfadz940jcOwmeBAa35HqFZcaRM02HG4BkTnv7L"
+    },
+    "_default": {
+      "link": "MealsToGo"
+    }
+  }
+}

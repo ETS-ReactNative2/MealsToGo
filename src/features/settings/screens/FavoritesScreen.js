@@ -36,7 +36,7 @@ export default function FavoritesScreen({ navigation }) {
             </TouchableOpacity>
           );
         }}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.placeId}
       />
     </SafeArea>
   ) : (
