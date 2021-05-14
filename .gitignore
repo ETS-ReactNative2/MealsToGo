@@ -17,3 +17,4 @@ src/mock/chicago.json
 .gitignore
 src/mock/
 notes
+.env

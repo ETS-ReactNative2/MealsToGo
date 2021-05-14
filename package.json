@@ -20,6 +20,7 @@
     "@reduxjs/toolkit": "^1.5.1",
     "axios": "^0.21.1",
     "camelize": "^1.0.0",
+    "dotenv": "^9.0.2",
     "expo": "~41.0.1",
     "expo-app-loading": "^1.0.3",
     "expo-camera": "~11.0.2",
