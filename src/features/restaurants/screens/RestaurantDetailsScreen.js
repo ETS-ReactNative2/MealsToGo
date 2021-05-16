@@ -71,7 +71,7 @@ export default function RestaurantDetailsScreen({ navigation, route }) {
           mode='contained'
           onPress={() => {
             dispatch(
-              addToCart({ item: { name: 'special', price: 1299 }, restaurant })
+              addToCart({ item: { name: 'special', price: 12.99 }, restaurant })
             );
             navigation.navigate('Checkout');
           }}

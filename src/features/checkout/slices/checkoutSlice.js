@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import createStripe from 'stripe-client';
+import Parse from 'parse/react-native';
 
 const stripe = createStripe(
-  'pk_test_51HzDwlIfEuMDL6nvAXXM3pbywxTyQjerlEGqAyg8sUESBJKtAy6j86uMoCvYLInPpahyRSC3S8G65md8jbkGYPNE002bZm2QZf'
+  'pk_test_51Ir3xdCLzGos844gmUeT6yeHtwdp3xpOetekhhiQcAIIV3z8UgEyH1An8ENRHCP2d4MdFuz7VuOYfvjzqt7rUTiJ00XIjjkrY5'
 );
 
 const initialState = { token: {} };
@@ -12,6 +13,18 @@ export const fetchCardToken = createAsyncThunk(
   async (card) => {
     const token = await stripe.createToken({ card });
     return token;
+  }
+);
+
+export const makePay = createAsyncThunk(
+  'checkout/makePay',
+  async (amount, { getState }) => {
+    const { checkout } = getState();
+    const data = await Parse.Cloud.run('makePay', {
+      amount,
+      tokenId: checkout.token.id,
+    });
+    return data;
   }
 );
 
@@ -29,6 +42,17 @@ const checkoutSlice = createSlice({
       state.token = action.payload;
     },
     [fetchCardToken.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    },
+    [makePay.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [makePay.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.succuss = true;
+    },
+    [makePay.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error.message;
     },

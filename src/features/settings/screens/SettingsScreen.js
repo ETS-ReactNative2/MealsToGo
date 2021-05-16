@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
 import { logout } from '../../account/slices/userSlice';
 import { saveFavorites } from '../../../components/Favorites/favoritesSlice';
+import { saveCart } from '../../../features/checkout/slices/cartSlice';
+
 import { List, Avatar } from 'react-native-paper';
 import Text from '../../../components/utils/Text';
 import Spacer from '../../../components/utils/Spacer';
@@ -49,6 +51,7 @@ export default function SettingsScreen({ navigation }) {
           title='Logout'
           left={(props) => <List.Icon {...props} color='black' icon='door' />}
           onPress={() => {
+            dispatch(saveCart());
             dispatch(saveFavorites());
             dispatch(logout());
           }}

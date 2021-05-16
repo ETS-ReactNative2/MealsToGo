@@ -4,7 +4,7 @@ import { LiteCreditCardInput } from 'react-native-lite-credit-card-input';
 import { fetchCardToken } from '../slices/checkoutSlice';
 import Spacer from '../../../components/utils/Spacer';
 
-export default function CreditCardInput({ name = 'Mo' }) {
+export default function CreditCardInput({ name }) {
   const dispatch = useDispatch();
 
   const onChange = async (data) => {
@@ -19,7 +19,7 @@ export default function CreditCardInput({ name = 'Mo' }) {
       name: name,
     };
     if (valid) {
-      // dispatch(fetchCardToken(card));
+      dispatch(fetchCardToken(card));
     }
   };
 

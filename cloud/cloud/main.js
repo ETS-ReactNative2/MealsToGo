@@ -5,3 +5,4 @@ if (process.env.NODE_ENV !== 'PRODUCTION') {
 
 const Location = require('./location/index.js');
 const Restaurants = require('./restaurants/index.js');
+const Checkout = require('./checkout/index.js');

@@ -1,7 +1,9 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ScrollView } from 'react-native';
 import { List } from 'react-native-paper';
+import { clearCart } from '../slices/cartSlice';
+import { makePay } from '../slices/checkoutSlice';
 
 import Text from '../../../components/utils/Text';
 import Spacer from '../../../components/utils/Spacer';
@@ -9,11 +11,36 @@ import SafeArea from '../../../components/utils/SafeArea';
 
 import CreditCardInput from '../components/CreditCardInput';
 
-import { CartIconContainer, CartIcon } from '../components/checkoutStyles';
+import {
+  CartIconContainer,
+  CartIcon,
+  NameInput,
+  PayButton,
+  ClearButton,
+  PaymentProcessing,
+} from '../components/checkoutStyles';
 import RestaurantInfoCard from '../../restaurants/components/RestaurantInfoCard';
 
-export default function CheckoutScreen() {
+export default function CheckoutScreen({ navigation }) {
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.checkout);
   const { items, restaurant, sum } = useSelector((state) => state.cart);
+  const [ownerName, setOwnerName] = useState('');
+
+  const handlePay = async () => {
+    const resultAction = await dispatch(makePay(sum));
+    // console.log('resultAction: ', resultAction);
+    if (makePay.fulfilled.match(resultAction)) {
+      console.log('fulfilled ');
+      navigation.navigate('CheckoutSuccess');
+      dispatch(clearCart());
+    } else {
+      console.log('regected: ', error);
+      navigation.navigate('CheckoutError', {
+        error: 'Unable to complete the payment, please try again',
+      });
+    }
+  };
 
   if (!items.length || !restaurant) {
     return (
@@ -25,9 +52,11 @@ export default function CheckoutScreen() {
       </SafeArea>
     );
   }
+
   return (
     <SafeArea>
       <RestaurantInfoCard restaurant={restaurant} />
+      {loading && <PaymentProcessing />}
       <ScrollView>
         <Spacer position='left' size='medium'>
           <Spacer position='top' size='large'>
@@ -35,14 +64,40 @@ export default function CheckoutScreen() {
           </Spacer>
           <List.Section>
             {items.map(({ name, price }, index) => {
-              return (
-                <List.Item key={index} title={`${name} - ${price / 100}`} />
-              );
+              return <List.Item key={index} title={`${name} - ${price}`} />;
             })}
           </List.Section>
-          <Text>Total: {sum / 100}</Text>
+          <Text>Total: {sum}</Text>
         </Spacer>
-        <CreditCardInput />
+        <NameInput
+          label='Name'
+          value={ownerName}
+          onChangeText={(name) => {
+            setOwnerName(name);
+          }}
+        />
+        <Spacer position='top' size='large'>
+          {ownerName.length > 0 && <CreditCardInput name={ownerName} />}
+        </Spacer>
+        <Spacer position='top' size='xxl' />
+        <PayButton
+          disabled={loading}
+          icon='cash-usd'
+          mode='contained'
+          onPress={handlePay}
+        >
+          Pay
+        </PayButton>
+        <Spacer position='top' size='large'>
+          <ClearButton
+            disabled={loading}
+            icon='cart-off'
+            mode='contained'
+            onPress={() => dispatch(clearCart())}
+          >
+            Clear Cart
+          </ClearButton>
+        </Spacer>
       </ScrollView>
     </SafeArea>
   );
