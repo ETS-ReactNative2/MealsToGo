@@ -1,16 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components/native';
 import { AntDesign } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native';
 import { addFavorite, removeFavorite } from './favoritesSlice';
-
-const FavouriteButton = styled(TouchableOpacity)`
-  position: absolute;
-  top: 25px;
-  right: 25px;
-  z-index: 9;
-`;
+import { FavouriteButton } from './favoritesStyles';
 
 export default function Favorite({ restaurant }) {
   const { favorites } = useSelector((state) => state.favorites);

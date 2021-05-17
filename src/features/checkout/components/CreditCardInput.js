@@ -9,7 +9,6 @@ export default function CreditCardInput({ name }) {
 
   const onChange = async (data) => {
     const { values, valid } = data;
-    // const isIncomplete = Object.values(status).includes('');
     const expiry = values.expiry.split('/');
     const card = {
       number: values.number,

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRestaurants } from '../slices/restaurantsSlice';
-import { ActivityIndicator, Colors } from 'react-native-paper';
+import { Colors } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native';
-import styled from 'styled-components/native';
 import SafeArea from '../../../components/utils/SafeArea';
 import Search from '../components/Search';
 import RestaurantInfoCard from '../components/RestaurantInfoCard';
@@ -11,15 +10,7 @@ import Spacer from '../../../components/utils/Spacer';
 import FavoritesBar from '../../../components/Favorites/FavoritesBar';
 import { RestaurantList } from '../components/RestaurantListStyles';
 import FadeInView from '../../../components/animations/FadeInView';
-
-const Loading = styled(ActivityIndicator)`
-  margin-left: -25px;
-`;
-const LoadingContainer = styled.View`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-`;
+import { Loading, LoadingContainer } from '../components/RestaurantsStyles';
 
 export default function RestaurantsScreen({ navigation }) {
   const dispatch = useDispatch();

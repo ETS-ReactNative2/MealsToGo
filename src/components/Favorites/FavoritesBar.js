@@ -1,17 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { ScrollView, TouchableOpacity } from 'react-native';
-import styled from 'styled-components/native';
 import Spacer from '../utils/Spacer';
 import CompactRestaurantInfo from '../CompactRestaurantInfo/CompactRestaurantInfo';
 import Text from '../utils/Text';
-import { Card } from 'react-native-paper';
+import { FavoritesWrapper } from './favoritesStyles';
 
-const FavoritesWrapper = styled(Card)`
-  padding: 10px;
-  z-index: 999;
-  border-radius: 15px;
-`;
 export default function FavoritesBar({ onNavigate }) {
   const { favorites } = useSelector((state) => state.favorites);
 

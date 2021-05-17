@@ -1,7 +1,8 @@
 import React from 'react';
-import styled from 'styled-components/native';
+// import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
+import { clearLocation } from '../../../slices/location/locationSlice';
 import { logout } from '../../account/slices/userSlice';
 import {
   saveFavorites,
@@ -15,26 +16,12 @@ import { colors } from '../../../infrastructure/theme/colors';
 import { List, Avatar } from 'react-native-paper';
 import Text from '../../../components/utils/Text';
 import Spacer from '../../../components/utils/Spacer';
-import SafeArea from '../../../components/utils/SafeArea';
-
-const SettingsItem = styled(List.Item)`
-  padding: ${(props) => props.theme.space[3]};
-  background-color: rgba(255, 255, 255, 0.4);
-`;
-const AvatarContainer = styled.View`
-  align-items: center;
-`;
-
-const TransparentSafeArea = styled(SafeArea)`
-  background-color: transparent;
-`;
-const SettingsBackground = styled.ImageBackground.attrs({
-  source: require('../../../../assets/home_bg.jpg'),
-})`
-  position: absolute;
-  height: 100%;
-  width: 100%;
-`;
+import {
+  SettingsItem,
+  AvatarContainer,
+  TransparentSafeArea,
+  SettingsBackground,
+} from '../components/SettingScreen';
 
 export default function SettingsScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -44,8 +31,9 @@ export default function SettingsScreen({ navigation }) {
     await dispatch(saveCart());
     dispatch(clearCart());
     await dispatch(saveFavorites());
+    await dispatch(logout());
     dispatch(clearFavorites());
-    dispatch(logout());
+    dispatch(clearLocation());
   };
 
   return (

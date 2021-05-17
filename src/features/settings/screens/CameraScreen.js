@@ -1,23 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Camera } from 'expo-camera';
-import styled from 'styled-components/native';
 
 import { View, TouchableOpacity } from 'react-native';
 import Text from '../../../components/utils/Text';
 import { savePhoto } from '../../account/slices/userSlice';
-
-const ProfileCamera = styled(Camera)`
-  width: 100%;
-  height: 100%;
-  flex: 1;
-`;
-
-const InnerSnap = styled.View`
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-`;
+import { ProfileCamera, InnerSnap } from '../components/CameraStyles';
 
 export default function CameraScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);

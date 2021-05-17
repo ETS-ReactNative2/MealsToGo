@@ -1,63 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import MapView from 'react-native-maps';
-import MapCallout from '../components/MapCallout';
+import RestaurantsMap from '../components/RestaurantsMap';
 
-import styled from 'styled-components/native';
-import Search from '../components/Search';
+import { Map } from '../components/mapStyles';
 
-const Map = styled(MapView)`
-  height: 100%;
-  width: 100%;
-`;
 export default function MapScreen({ navigation }) {
-  const { lat, lng, viewport } = useSelector(
-    (state) => state.location.geometry
-  );
-  const { restaurants } = useSelector((state) => state.restaurants);
-  const [latDelta, setLatDelta] = useState(0);
-
-  useEffect(() => {
-    const northeastLat = viewport.northeast.lat;
-    const southwestLat = viewport.southwest.lat;
-
-    setLatDelta(northeastLat - southwestLat);
-  }, [viewport]);
-
-  return (
-    <>
-      <Search />
+  const { geometry } = useSelector((state) => state.location);
+  if (!geometry) {
+    return (
       <Map
-        region={{
-          latitude: lat,
-          longitude: lng,
-          latitudeDelta: latDelta,
-          longitudeDelta: 0.01,
+        initialRegion={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
         }}
-      >
-        {restaurants.map((restaurant) => {
-          return (
-            <MapView.Marker
-              key={restaurant.placeId}
-              title={restaurant.name}
-              coordinate={{
-                latitude: restaurant.geometry.lat,
-                longitude: restaurant.geometry.lng,
-              }}
-            >
-              <MapView.Callout
-                onPress={() =>
-                  navigation.navigate('RestaurantDetails', {
-                    restaurant,
-                  })
-                }
-              >
-                <MapCallout restaurant={restaurant} />
-              </MapView.Callout>
-            </MapView.Marker>
-          );
-        })}
-      </Map>
-    </>
-  );
+      />
+    );
+  } else {
+    return <RestaurantsMap navigation={navigation} />;
+  }
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components/native';
 import { TouchableOpacity } from 'react-native';
 
 import SafeArea from '../../../components/utils/SafeArea';
@@ -9,11 +8,8 @@ import Spacer from '../../../components/utils/Spacer';
 
 import { RestaurantList } from '../../restaurants/components/RestaurantListStyles';
 import RestaurantInfoCard from '../../restaurants/components/RestaurantInfoCard';
+import { NoFavouritesArea } from '../components/FavoritesStyles';
 
-const NoFavouritesArea = styled(SafeArea)`
-  align-items: center;
-  justify-content: center;
-`;
 export default function FavoritesScreen({ navigation }) {
   const { favorites } = useSelector((state) => state.favorites);
 

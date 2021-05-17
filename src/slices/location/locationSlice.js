@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Parse from 'parse/react-native';
 
-const initialState = { keyword: 'San Francisco' };
+const initialState = { keyword: 'San Francisco', geometry: null };
 
 export const fetchLocation = createAsyncThunk(
   'location/fetchLocation',
@@ -10,9 +10,6 @@ export const fetchLocation = createAsyncThunk(
       const location = await Parse.Cloud.run('getLocation', {
         location: keyword,
       });
-      if (!location) {
-        throw new Error('not found');
-      }
       return location;
     }
   }
@@ -21,7 +18,12 @@ export const fetchLocation = createAsyncThunk(
 const locationSlice = createSlice({
   name: 'location',
   initialState,
-  reducers: {},
+  reducers: {
+    clearLocation(state, action) {
+      state.keyword = initialState.keyword;
+      state.geometry = initialState.geometry;
+    },
+  },
   extraReducers: {
     [fetchLocation.pending]: (state, action) => {
       state.loading = true;
@@ -38,5 +40,7 @@ const locationSlice = createSlice({
     },
   },
 });
+
+export const { clearLocation } = locationSlice.actions;
 
 export default locationSlice.reducer;

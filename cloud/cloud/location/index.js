@@ -2,15 +2,19 @@
 const { locationsMock } = require('./mock.js');
 
 Parse.Cloud.define('getLocation', async (request) => {
-  const { location } = request.params;
-  if (process.env.NODE_ENV === 'DEVELOPMENT') {
-    return locationTransform(locationsMock[location.toLowerCase()]);
+  try {
+    const { location } = request.params;
+    if (process.env.NODE_ENV === 'DEVELOPMENT') {
+      return locationTransform(locationsMock[location.toLowerCase()]);
+    }
+    const formatLocation = location.replace(/ /gi, '%20');
+    const { data } = await Parse.Cloud.httpRequest({
+      url: `https://api.mapbox.com/geocoding/v5/mapbox.places/${formatLocation}.json?limit=1&access_token=${process.env.MAPBOX_TOKEN}`,
+    });
+    return locationTransform(data);
+  } catch (err) {
+    throw new Error(err.message);
   }
-  const formatLocation = location.replace(/ /gi, '%20');
-  const { data } = await Parse.Cloud.httpRequest({
-    url: `https://api.mapbox.com/geocoding/v5/mapbox.places/${formatLocation}.json?limit=1&access_token=${process.env.MAPBOX_TOKEN}`,
-  });
-  return locationTransform(data);
 });
 
 const locationTransform = (data) => {
