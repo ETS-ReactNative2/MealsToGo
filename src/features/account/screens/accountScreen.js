@@ -3,7 +3,7 @@ import LottieView from 'lottie-react-native';
 import Spacer from '../../../components/utils/Spacer';
 import {
   AccountBackground,
-  AccountContainer,
+  MenuContainer,
   AccountCover,
   AuthButton,
   Title,
@@ -24,7 +24,7 @@ export default function AccountScreen({ navigation }) {
         />
       </AnimationWrapper>
       <Title>Meals To Go</Title>
-      <AccountContainer>
+      <MenuContainer>
         <AuthButton
           icon='lock-open-outline'
           mode='contained'
@@ -41,7 +41,7 @@ export default function AccountScreen({ navigation }) {
             Register
           </AuthButton>
         </Spacer>
-      </AccountContainer>
+      </MenuContainer>
     </AccountBackground>
   );
 }

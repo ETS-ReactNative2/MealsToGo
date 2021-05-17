@@ -52,7 +52,11 @@ export const loadPhoto = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    clearError(state, action) {
+      state.error = null;
+    },
+  },
   extraReducers: {
     [isLoggedIn.fulfilled]: (state, action) => {
       if (action.payload) {
@@ -103,5 +107,7 @@ const userSlice = createSlice({
     },
   },
 });
+
+export const { clearError } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../slices/userSlice';
+import { register, clearError } from '../slices/userSlice';
 import {
   AccountBackground,
   AccountCover,
@@ -20,6 +20,12 @@ export default function RegisterScreen({ navigation }) {
   const [repeatedPassword, setRepeatedPassword] = useState('');
   const dispatch = useDispatch();
   const { error, loading } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    navigation.addListener('beforeRemove', (e) => {
+      dispatch(clearError());
+    });
+  }, [dispatch, navigation]);
 
   return (
     <AccountBackground>

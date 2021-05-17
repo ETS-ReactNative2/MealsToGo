@@ -18,3 +18,4 @@ src/mock/chicago.json
 src/mock/
 notes
 .env
+logs/

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../slices/userSlice';
+import { login, clearError } from '../slices/userSlice';
 import {
   AccountBackground,
   AccountCover,
@@ -10,6 +10,7 @@ import {
   ErrorContainer,
   Title,
 } from '../components/accountStyles';
+
 import Text from '../../../components/utils/Text';
 import Spacer from '../../../components/utils/Spacer';
 import { ActivityIndicator, Colors } from 'react-native-paper';
@@ -19,6 +20,12 @@ export default function LoginScreen({ navigation }) {
   const { error, loading } = useSelector((state) => state.user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    navigation.addListener('beforeRemove', (e) => {
+      dispatch(clearError());
+    });
+  }, [dispatch, navigation]);
 
   return (
     <AccountBackground>
