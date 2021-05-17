@@ -42,9 +42,9 @@ const cartSlice = createSlice({
       }
     },
     clearCart(state, action) {
-      state.items = [];
-      state.restaurant = {};
-      state.sum = 0;
+      state.items = initialState.items;
+      state.restaurant = initialState.restaurant;
+      state.sum = initialState.sum;
     },
   },
   extraReducers: {
@@ -52,11 +52,6 @@ const cartSlice = createSlice({
       state.items = action.payload.items;
       state.restaurant = action.payload.restaurant;
       state.sum = action.payload.sum;
-    },
-    [saveCart.fulfilled]: (state, action) => {
-      state.items = initialState.items;
-      state.restaurant = initialState.restaurant;
-      state.sum = initialState.sum;
     },
   },
 });

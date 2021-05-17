@@ -3,8 +3,14 @@ import styled from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { TouchableOpacity } from 'react-native';
 import { logout } from '../../account/slices/userSlice';
-import { saveFavorites } from '../../../components/Favorites/favoritesSlice';
-import { saveCart } from '../../../features/checkout/slices/cartSlice';
+import {
+  saveFavorites,
+  clearFavorites,
+} from '../../../components/Favorites/favoritesSlice';
+import {
+  saveCart,
+  clearCart,
+} from '../../../features/checkout/slices/cartSlice';
 import { colors } from '../../../infrastructure/theme/colors';
 import { List, Avatar } from 'react-native-paper';
 import Text from '../../../components/utils/Text';
@@ -33,6 +39,15 @@ const SettingsBackground = styled.ImageBackground.attrs({
 export default function SettingsScreen({ navigation }) {
   const dispatch = useDispatch();
   const { info, photo } = useSelector((state) => state.user);
+
+  const handleLogout = async () => {
+    await dispatch(saveCart());
+    dispatch(clearCart());
+    await dispatch(saveFavorites());
+    dispatch(clearFavorites());
+    dispatch(logout());
+  };
+
   return (
     <SettingsBackground>
       <TransparentSafeArea>
@@ -92,11 +107,7 @@ export default function SettingsScreen({ navigation }) {
             left={(props) => (
               <List.Icon {...props} color={colors.ui.secondary} icon='door' />
             )}
-            onPress={() => {
-              dispatch(saveCart());
-              dispatch(saveFavorites());
-              dispatch(logout());
-            }}
+            onPress={handleLogout}
           />
         </List.Section>
       </TransparentSafeArea>

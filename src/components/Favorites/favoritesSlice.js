@@ -36,17 +36,18 @@ const favoritesSlice = createSlice({
         (x) => x.placeId !== action.payload.placeId
       );
     },
+    clearFavorites(state, action) {
+      state.favorites = initialState.favorites;
+    },
   },
   extraReducers: {
     [loadFavorites.fulfilled]: (state, action) => {
       state.favorites = action.payload;
     },
-    [saveFavorites.fulfilled]: (state, action) => {
-      state.favorites = [];
-    },
   },
 });
 
-export const { addFavorite, removeFavorite } = favoritesSlice.actions;
+export const { addFavorite, removeFavorite, clearFavorites } =
+  favoritesSlice.actions;
 
 export default favoritesSlice.reducer;

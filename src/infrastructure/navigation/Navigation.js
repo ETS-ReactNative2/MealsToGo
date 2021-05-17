@@ -15,7 +15,8 @@ export default function Navigation() {
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? <AppNavigator /> : <AccountNavigator />}
+      {isAuthenticated !== null &&
+        (isAuthenticated ? <AppNavigator /> : <AccountNavigator />)}
     </NavigationContainer>
   );
 }
