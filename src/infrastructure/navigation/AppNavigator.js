@@ -9,6 +9,7 @@ import CheckoutNavigator from './CheckoutNavigator';
 import { loadCart } from '../../features/checkout/slices/cartSlice';
 import { loadFavorites } from '../../components/Favorites/favoritesSlice';
 import { loadPhoto } from '../../features/account/slices/userSlice';
+import { colors } from '../../infrastructure/theme/colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -40,8 +41,8 @@ export default function AppNavigator() {
     <Tab.Navigator
       screenOptions={createScreenOptions}
       tabBarOptions={{
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
+        activeTintColor: colors.brand.primary,
+        inactiveTintColor: colors.brand.muted,
       }}
     >
       <Tab.Screen name='Restaurants' component={RestaurantsNavigator} />

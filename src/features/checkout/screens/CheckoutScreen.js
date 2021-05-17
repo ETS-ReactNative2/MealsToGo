@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ScrollView } from 'react-native';
-import { List } from 'react-native-paper';
+import { List, Divider } from 'react-native-paper';
 import { clearCart } from '../slices/cartSlice';
 import { makePay } from '../slices/checkoutSlice';
 
@@ -29,13 +29,10 @@ export default function CheckoutScreen({ navigation }) {
 
   const handlePay = async () => {
     const resultAction = await dispatch(makePay(sum));
-    // console.log('resultAction: ', resultAction);
     if (makePay.fulfilled.match(resultAction)) {
-      console.log('fulfilled ');
       navigation.navigate('CheckoutSuccess');
       dispatch(clearCart());
     } else {
-      console.log('regected: ', error);
       navigation.navigate('CheckoutError', {
         error: 'Unable to complete the payment, please try again',
       });
@@ -64,11 +61,15 @@ export default function CheckoutScreen({ navigation }) {
           </Spacer>
           <List.Section>
             {items.map(({ name, price }, index) => {
-              return <List.Item key={index} title={`${name} - ${price}`} />;
+              return (
+                <List.Item key={`item-${index}`} title={`${name} - ${price}`} />
+              );
             })}
           </List.Section>
           <Text>Total: {sum}</Text>
         </Spacer>
+        <Spacer position='top' size='large' />
+        <Divider />
         <NameInput
           label='Name'
           value={ownerName}

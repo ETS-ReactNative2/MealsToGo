@@ -23,7 +23,7 @@ export default function RestaurantInfoCard({ restaurant = {} }) {
   const ratingArray = Array.from(new Array(Math.floor(rating)));
 
   return (
-    <RestaurantCard elevation={5}>
+    <RestaurantCard elevation={2}>
       <View>
         <Favorite restaurant={restaurant} />
         <RestaurantCardCover key={name} source={{ uri: photos[0] }} />

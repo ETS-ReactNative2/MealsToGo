@@ -5,9 +5,12 @@ import styled from 'styled-components/native';
 import Spacer from '../utils/Spacer';
 import CompactRestaurantInfo from '../CompactRestaurantInfo/CompactRestaurantInfo';
 import Text from '../utils/Text';
+import { Card } from 'react-native-paper';
 
-const FavoritesWrapper = styled.View`
+const FavoritesWrapper = styled(Card)`
   padding: 10px;
+  z-index: 999;
+  border-radius: 15px;
 `;
 export default function FavoritesBar({ onNavigate }) {
   const { favorites } = useSelector((state) => state.favorites);
@@ -16,7 +19,7 @@ export default function FavoritesBar({ onNavigate }) {
     return null;
   }
   return (
-    <FavoritesWrapper>
+    <FavoritesWrapper elevation={3}>
       <Spacer variant='left.large'>
         <Text variant='caption'>Favorites</Text>
       </Spacer>
