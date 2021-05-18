@@ -10,8 +10,8 @@ export default function Search({ isFavouritesToggled, onFavouritesToggle }) {
   const [searchKeyword, setSearchKeyword] = useState(keyword);
 
   useEffect(() => {
-    dispatch(fetchLocation('San Francisco'));
-  }, [dispatch]);
+    setSearchKeyword(keyword);
+  }, [keyword]);
 
   return (
     <SearchContainer>
