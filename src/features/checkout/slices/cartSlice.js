@@ -17,7 +17,6 @@ export const loadCart = createAsyncThunk(
 export const saveCart = createAsyncThunk(
   'cart/saveCart',
   async (_, { getState }) => {
-    console.log('save cart');
     const { cart, user } = getState();
     const jsonValue = JSON.stringify(cart);
     await AsyncStorage.setItem(`@cart-${user.info.username}`, jsonValue);

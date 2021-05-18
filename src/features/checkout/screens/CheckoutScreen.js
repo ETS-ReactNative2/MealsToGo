@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ScrollView } from 'react-native';
 import { List, Divider } from 'react-native-paper';
@@ -14,7 +14,6 @@ import CreditCardInput from '../components/CreditCardInput';
 import {
   CartIconContainer,
   CartIcon,
-  NameInput,
   PayButton,
   ClearButton,
   PaymentProcessing,
@@ -23,15 +22,13 @@ import RestaurantInfoCard from '../../restaurants/components/RestaurantInfoCard'
 
 export default function CheckoutScreen({ navigation }) {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.checkout);
+  const { loading, success } = useSelector((state) => state.checkout);
   const { items, restaurant, sum } = useSelector((state) => state.cart);
-  const [ownerName, setOwnerName] = useState('');
 
   const handlePay = async () => {
     const resultAction = await dispatch(makePay(sum));
     if (makePay.fulfilled.match(resultAction)) {
       navigation.navigate('CheckoutSuccess');
-      dispatch(clearCart());
     } else {
       navigation.navigate('CheckoutError', {
         error: 'Unable to complete the payment, please try again',
@@ -39,7 +36,7 @@ export default function CheckoutScreen({ navigation }) {
     }
   };
 
-  if (!items.length || !restaurant) {
+  if (!success && !items.length) {
     return (
       <SafeArea>
         <CartIconContainer>
@@ -70,16 +67,7 @@ export default function CheckoutScreen({ navigation }) {
         </Spacer>
         <Spacer position='top' size='large' />
         <Divider />
-        <NameInput
-          label='Name'
-          value={ownerName}
-          onChangeText={(name) => {
-            setOwnerName(name);
-          }}
-        />
-        <Spacer position='top' size='large'>
-          {ownerName.length > 0 && <CreditCardInput name={ownerName} />}
-        </Spacer>
+        <CreditCardInput />
         <Spacer position='top' size='xxl' />
         <PayButton
           disabled={loading}
