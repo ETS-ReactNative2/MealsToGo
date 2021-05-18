@@ -19,8 +19,8 @@ Parse.initialize(
   'QKfadz940jcOwmeBAa35HqFZcaRM02HG4BkTnv7L',
   'ioNNVmyFqnCeptnGh1PxhGUvvi99A0mx3YcO0F25'
 );
-Parse.serverURL = 'http://192.168.1.19:1337/parse';
-// Parse.serverURL = 'https://parseapi.back4app.com/';
+// Parse.serverURL = 'http://192.168.1.19:1337/parse';
+Parse.serverURL = 'https://parseapi.back4app.com/';
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
