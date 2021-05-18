@@ -8,9 +8,16 @@ import Search from '../components/Search';
 import RestaurantInfoCard from '../components/RestaurantInfoCard';
 import Spacer from '../../../components/utils/Spacer';
 import FavoritesBar from '../../../components/Favorites/FavoritesBar';
-import { RestaurantList } from '../components/RestaurantListStyles';
 import FadeInView from '../../../components/animations/FadeInView';
-import { Loading, LoadingContainer } from '../components/RestaurantsStyles';
+import {
+  Loading,
+  LoadingContainer,
+  RestaurantList,
+  ErrorIconContainer,
+  ErorIcon,
+} from '../components/RestaurantsStyles';
+import { colors } from '../../../infrastructure/theme/colors';
+import Text from '../../../components/utils/Text';
 
 export default function RestaurantsScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -37,25 +44,34 @@ export default function RestaurantsScreen({ navigation }) {
         onFavouritesToggle={() => setIsToggled(!isToggled)}
       />
       {isToggled && <FavoritesBar onNavigate={navigation.navigate} />}
-      <RestaurantList
-        data={restaurants}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('RestaurantDetails', {
-                restaurant: item,
-              })
-            }
-          >
-            <Spacer position='bottom' size='large'>
-              <FadeInView>
-                <RestaurantInfoCard restaurant={item} />
-              </FadeInView>
-            </Spacer>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item) => item.placeId}
-      />
+      {error ? (
+        <ErrorIconContainer>
+          <ErorIcon icon='close' bg={colors.ui.error} />
+          <Text variant='body'>
+            Unable to load restaurants, please try again
+          </Text>
+        </ErrorIconContainer>
+      ) : (
+        <RestaurantList
+          data={restaurants}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('RestaurantDetails', {
+                  restaurant: item,
+                })
+              }
+            >
+              <Spacer position='bottom' size='large'>
+                <FadeInView>
+                  <RestaurantInfoCard restaurant={item} />
+                </FadeInView>
+              </Spacer>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.placeId}
+        />
+      )}
     </SafeArea>
   );
 }

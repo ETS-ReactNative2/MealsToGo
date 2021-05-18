@@ -32,6 +32,7 @@ const restaurantsSlice = createSlice({
     [fetchRestaurants.fulfilled]: (state, action) => {
       state.loading = false;
       state.restaurants = action.payload;
+      state.error = null;
     },
     [fetchRestaurants.rejected]: (state, action) => {
       state.loading = false;

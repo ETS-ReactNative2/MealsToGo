@@ -5,7 +5,7 @@ import { addToCart } from '../../checkout/slices/cartSlice';
 import { List, Divider } from 'react-native-paper';
 
 import RestaurantInfoCard from '../components/RestaurantInfoCard';
-import { OrderButton } from '../components/RestaurantListStyles';
+import { OrderButton } from '../components/RestaurantDetailsStyles';
 import SafeArea from '../../../components/utils/SafeArea';
 import Spacer from '../../../components/utils/Spacer';
 

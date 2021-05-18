@@ -29,7 +29,7 @@ export default function CheckoutSuccessScreen({ navigation }) {
     <SafeArea>
       <CartIconContainer>
         <CartIcon icon='check-bold' />
-        <Text variant='label'>Success!</Text>
+        <Text variant='body'>Success!</Text>
       </CartIconContainer>
     </SafeArea>
   );

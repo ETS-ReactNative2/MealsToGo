@@ -27,7 +27,7 @@ export default function CheckoutErrorScreen({ route, navigation }) {
     <SafeArea>
       <CartIconContainer>
         <CartIcon icon='close' bg={colors.ui.error} />
-        <Text variant='label'>{error}</Text>
+        <Text variant='body'>{error}</Text>
       </CartIconContainer>
     </SafeArea>
   );

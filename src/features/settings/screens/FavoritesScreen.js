@@ -6,7 +6,7 @@ import SafeArea from '../../../components/utils/SafeArea';
 import Text from '../../../components/utils/Text';
 import Spacer from '../../../components/utils/Spacer';
 
-import { RestaurantList } from '../../restaurants/components/RestaurantListStyles';
+import { RestaurantList } from '../../restaurants/components/RestaurantsStyles';
 import RestaurantInfoCard from '../../restaurants/components/RestaurantInfoCard';
 import { NoFavouritesArea } from '../components/FavoritesStyles';
 

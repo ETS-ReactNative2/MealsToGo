@@ -16,6 +16,7 @@ export const CartIcon = styled(Avatar.Icon).attrs({
   size: 128,
 })`
   background-color: ${(props) => props.bg || props.theme.colors.brand.primary};
+  margin-bottom: ${(props) => props.theme.space[3]};
 `;
 
 export const NameInput = styled(TextInput)`
