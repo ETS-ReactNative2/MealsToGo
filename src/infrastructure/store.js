@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import userReducer from '../features/account/slices/userSlice';
 import restaurantsReducer from '../features/restaurants/slices/restaurantsSlice';
 import locationReducer from '../slices/location/locationSlice';
@@ -14,6 +14,9 @@ const store = configureStore({
     cart: cartReducer,
     checkout: checkoutReducer,
   },
+  middleware: getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });
 
 export default store;
