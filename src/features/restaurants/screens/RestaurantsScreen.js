@@ -25,7 +25,6 @@ export default function RestaurantsScreen({ navigation }) {
   const { restaurants, loading, error } = useSelector(
     (state) => state.restaurants
   );
-  console.log(error);
   const { geometry } = useSelector((state) => state.location);
   useEffect(() => {
     if (geometry) {
