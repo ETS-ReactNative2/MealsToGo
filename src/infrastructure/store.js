@@ -14,16 +14,6 @@ const store = configureStore({
     cart: cartReducer,
     checkout: checkoutReducer,
   },
-  middleware: getDefaultMiddleware({
-    serializableCheck: false,
-  }),
 });
-
-// {ignoredActions: [
-//   'login',
-//   'user/login/fulfilled',
-//   'user/login',
-//   'login.fulfilled',
-// ],}
 
 export default store;

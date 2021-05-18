@@ -17,6 +17,7 @@ export const loadFavorites = createAsyncThunk(
 export const saveFavorites = createAsyncThunk(
   'favorites/saveFavorites',
   async (_, { getState }) => {
+    console.log('save favorites');
     const { favorites, user } = getState();
     const jsonValue = JSON.stringify(favorites.favorites);
     await AsyncStorage.setItem(`@favorites-${user.info.username}`, jsonValue);

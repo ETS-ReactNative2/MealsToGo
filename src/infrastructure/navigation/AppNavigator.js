@@ -1,4 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
+import { saveFavorites } from '../../components/Favorites/favoritesSlice';
+import { saveCart } from '../../features/checkout/slices/cartSlice';
+import { AppState } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -31,11 +34,29 @@ const createScreenOptions = ({ route }) => {
 
 export default function AppNavigator() {
   const dispatch = useDispatch();
+
+  const handleAppInBackground = useCallback(
+    (nextAppState) => {
+      if (nextAppState === 'background') {
+        dispatch(saveFavorites());
+        dispatch(saveCart());
+      }
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
     dispatch(loadCart());
     dispatch(loadFavorites());
     dispatch(loadPhoto());
   }, [dispatch]);
+
+  useEffect(() => {
+    AppState.addEventListener('change', handleAppInBackground);
+    return () => {
+      AppState.removeEventListener('change', handleAppInBackground);
+    };
+  }, [handleAppInBackground]);
 
   return (
     <Tab.Navigator
