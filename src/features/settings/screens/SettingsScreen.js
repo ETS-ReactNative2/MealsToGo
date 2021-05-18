@@ -22,6 +22,7 @@ import {
   TransparentSafeArea,
   SettingsBackground,
 } from '../components/SettingScreen';
+import { clearRestaurants } from '../../restaurants/slices/restaurantsSlice';
 
 export default function SettingsScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ export default function SettingsScreen({ navigation }) {
     dispatch(clearCart());
     await dispatch(saveFavorites());
     await dispatch(logout());
+    dispatch(clearRestaurants());
     dispatch(clearFavorites());
     dispatch(clearLocation());
   };

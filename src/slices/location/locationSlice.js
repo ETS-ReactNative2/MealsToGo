@@ -11,6 +11,8 @@ const initialState = {
       northeast: { lng: -122.354986187987, lat: 37.8324289465257 },
     },
   },
+  loading: null,
+  error: null,
 };
 
 export const fetchLocation = createAsyncThunk(
@@ -32,6 +34,8 @@ const locationSlice = createSlice({
     clearLocation(state, action) {
       state.keyword = initialState.keyword;
       state.geometry = initialState.geometry;
+      state.error = initialState.error;
+      state.loading = initialState.loading;
     },
   },
   extraReducers: {

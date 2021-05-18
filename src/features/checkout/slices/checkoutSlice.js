@@ -6,7 +6,7 @@ const stripe = createStripe(
   'pk_test_51Ir3xdCLzGos844gmUeT6yeHtwdp3xpOetekhhiQcAIIV3z8UgEyH1An8ENRHCP2d4MdFuz7VuOYfvjzqt7rUTiJ00XIjjkrY5'
 );
 
-const initialState = { token: {}, succuss: false };
+const initialState = { token: {}, succuss: false, loading: null, error: null };
 
 export const fetchCardToken = createAsyncThunk(
   'checkout/fetchCardToken',
@@ -33,7 +33,10 @@ const checkoutSlice = createSlice({
   initialState,
   reducers: {
     clearSuccess(state, action) {
-      state.succuss = false;
+      state.token = initialState.token;
+      state.succuss = initialState.succuss;
+      state.loading = initialState.loading;
+      state.error = initialState.error;
     },
   },
   extraReducers: {

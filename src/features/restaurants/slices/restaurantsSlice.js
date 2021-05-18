@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Parse from 'parse/react-native';
 
-const initialState = { restaurants: [] };
+const initialState = { restaurants: [], loading: null, error: null };
 
 export const fetchRestaurants = createAsyncThunk(
   'restaurants/fetchRestaurants',
@@ -22,6 +22,8 @@ const restaurantsSlice = createSlice({
   reducers: {
     clearRestaurants(state, action) {
       state.restaurants = initialState.restaurants;
+      state.error = initialState.error;
+      state.loading = initialState.loading;
     },
   },
   extraReducers: {

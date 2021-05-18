@@ -1,7 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Parse from 'parse/react-native';
-const initialState = { info: {}, isAuthenticated: null };
+const initialState = {
+  info: {},
+  isAuthenticated: null,
+  photo: null,
+  error: null,
+  loading: null,
+};
 
 export const isLoggedIn = createAsyncThunk('user/isLoggedIn', async () => {
   const user = await Parse.User.currentAsync();
@@ -98,9 +104,11 @@ const userSlice = createSlice({
       state.isAuthenticated = false;
     },
     [logout.fulfilled]: (state, action) => {
-      state.info = null;
-      state.photo = null;
+      state.info = initialState.info;
+      state.photo = initialState.photo;
       state.isAuthenticated = false;
+      state.error = initialState.error;
+      state.loading = initialState.loading;
     },
     [savePhoto.fulfilled]: (state, action) => {
       state.photo = action.payload;
