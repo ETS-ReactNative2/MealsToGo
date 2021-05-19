@@ -1,7 +1,7 @@
 # MealsToGo
 
 Hi!
-MealsToGo is food delivery app ,that I develop using react native,
+MealsToGo a is food delivery app ,that I develop using react native,
 
 for live demo using expo [click here](https://expo.io/@dank179/projects/MealsToGo)
 
